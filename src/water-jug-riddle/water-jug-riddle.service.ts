@@ -3,7 +3,11 @@ import { Solution, Step } from './types';
 
 @Injectable()
 export class WaterJugRiddleService {
-  getSolution(): Solution {
+  getSolution(
+    jug1Capacity: number,
+    jug2Capacity: number,
+    targetCapacity: number,
+  ): Solution {
     return this.getDummySolution();
   }
 

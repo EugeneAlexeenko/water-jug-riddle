@@ -21,7 +21,11 @@ export class WaterJugRiddleController {
   @Post('solution')
   @HttpCode(HttpStatus.OK)
   getSolution(@Body() dto: SolutionRequestDto): SolutionResponseDto {
-    const solution = this.waterJugRiddleService.getSolution();
+    const solution = this.waterJugRiddleService.getSolution(
+      dto.jug1Capacity,
+      dto.jug2Capacity,
+      dto.targetVolume,
+    );
 
     return { solution };
   }
