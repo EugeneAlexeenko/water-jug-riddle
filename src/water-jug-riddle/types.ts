@@ -1,4 +1,4 @@
-type Step = {
+export type Step = {
   step: number;
   jug1Volume: number;
   jug2Volume: number;
@@ -6,6 +6,6 @@ type Step = {
   status?: 'solved';
 };
 
-type SolutionError = string;
+export type SolutionError = string;
 
-type Solution = Step[] | SolutionError;
+export type Solution = Step[] | SolutionError;

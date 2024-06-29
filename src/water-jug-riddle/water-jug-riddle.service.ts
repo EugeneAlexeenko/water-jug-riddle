@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Solution, Step } from './types';
 
 @Injectable()
 export class WaterJugRiddleService {
