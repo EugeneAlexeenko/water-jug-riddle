@@ -3,15 +3,15 @@ import { ApiProperty } from '@nestjs/swagger';
 export class SolutionRequestDto {
   @ApiProperty({
     example: 3,
-    description: 'Volume of jug 1',
+    description: 'Capacity of jug 1',
   })
-  jug1Volume: number;
+  jug1Capacity: number;
 
   @ApiProperty({
     example: 5,
-    description: 'Volume of jug 2',
+    description: 'Capacity of jug 2',
   })
-  jug2Volume: number;
+  jug2Capacity: number;
 
   @ApiProperty({
     example: 4,

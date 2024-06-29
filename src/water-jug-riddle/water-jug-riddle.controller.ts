@@ -1,8 +1,8 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { WaterJugRiddleService } from './water-jug-riddle.service';
 import { SolutionRequestDto } from './dto/solution-request.dto';
 import { SolutionResponseDto } from './dto/solution-response.dto';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('water-jug-riddle')
 @Controller('water-jug-riddle')
