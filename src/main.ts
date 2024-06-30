@@ -16,9 +16,7 @@ function setupSwagger(app: INestApplication) {
   SwaggerModule.setup(SWAGGER_PATH, app, document);
 }
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-
+export function setupApp(app: INestApplication) {
   app.setGlobalPrefix('api');
   app.useGlobalPipes(
     new ValidationPipe({
@@ -26,9 +24,15 @@ async function bootstrap() {
       transform: true,
     }),
   );
+}
 
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+
+  setupApp(app);
   setupSwagger(app);
 
   await app.listen(3000);
 }
+
 bootstrap();

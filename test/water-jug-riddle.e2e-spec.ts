@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
+import { setupApp } from 'src/main';
 
 describe('WaterJugRiddleController (e2e)', () => {
   let app: INestApplication;
@@ -13,13 +14,8 @@ describe('WaterJugRiddleController (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
 
-    app.setGlobalPrefix('api');
-    app.useGlobalPipes(
-      new ValidationPipe({
-        whitelist: true,
-        transform: true,
-      }),
-    );
+    setupApp(app);
+
     await app.init();
   });
 
