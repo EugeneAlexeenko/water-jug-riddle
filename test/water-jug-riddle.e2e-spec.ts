@@ -7,7 +7,7 @@ import { setupApp } from './../src/main';
 describe('WaterJugRiddleController (e2e)', () => {
   let app: INestApplication;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
@@ -17,6 +17,10 @@ describe('WaterJugRiddleController (e2e)', () => {
     setupApp(app);
 
     await app.init();
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 
   describe('POST /api/water-jug-riddle/solution', () => {
