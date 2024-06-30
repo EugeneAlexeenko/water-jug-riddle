@@ -8,6 +8,7 @@ export class WaterJugRiddleService {
     jug2Capacity: number,
     targetCapacity: number,
   ): Solution {
+    console.log(jug1Capacity, jug2Capacity, targetCapacity);
     return this.getDummySolution();
   }
 
