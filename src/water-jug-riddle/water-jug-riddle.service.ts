@@ -6,9 +6,14 @@ export class WaterJugRiddleService {
   getSolution(
     jug1Capacity: number,
     jug2Capacity: number,
-    targetCapacity: number,
+    targetVolume: number,
   ): Solution {
-    console.log(jug1Capacity, jug2Capacity, targetCapacity);
+    const biggerJugCapacity = Math.max(jug1Capacity, jug2Capacity);
+
+    if (jug1Capacity < targetVolume && jug2Capacity < targetVolume) {
+      return `Solution does not exist. Target volume: ${targetVolume} is bigger than the bigger jug capacity: ${biggerJugCapacity}`;
+    }
+
     return this.getDummySolution();
   }
 

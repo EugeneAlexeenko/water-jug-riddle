@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { WaterJugRiddleService } from './water-jug-riddle.service';
+import { Solution } from './types';
 
 describe('WaterJugRiddleService', () => {
   let waterJugRiddleService: WaterJugRiddleService;
@@ -19,7 +20,12 @@ describe('WaterJugRiddleService', () => {
   });
 
   describe('getSolution', () => {
-    it.todo('should return an error if constraints are not met');
+    it('should return an error if target volume cannot fit into the bigger jug', () => {
+      const expectedResult: Solution =
+        'Solution does not exist. Target volume: 10 is bigger than the bigger jug capacity: 5';
+      const solution = waterJugRiddleService.getSolution(1, 5, 10);
+      expect(solution).toEqual(expectedResult);
+    });
 
     it('should return correct solution for classic problem with 3 and 5 liters jugs', () => {
       const solution = waterJugRiddleService.getSolution(3, 5, 4);
