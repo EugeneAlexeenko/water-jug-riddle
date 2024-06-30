@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
-import { setupApp } from 'src/main';
+import { setupApp } from './../src/main';
 
 describe('WaterJugRiddleController (e2e)', () => {
   let app: INestApplication;
@@ -40,7 +40,7 @@ describe('WaterJugRiddleController (e2e)', () => {
     it('should return correct answer for a classic challenge (3 and 5 gallon jugs, target 4)', () => {
       const expectedResponse = {
         solution: [
-          { step: 1, jug1Volume: 5, jug2Volume: 0, action: 'Fill Jug1' },
+          { step: 1, jug1Volume: 0, jug2Volume: 5, action: 'Fill Jug2' },
           {
             step: 2,
             jug1Volume: 3,
@@ -60,7 +60,7 @@ describe('WaterJugRiddleController (e2e)', () => {
             jug1Volume: 3,
             jug2Volume: 4,
             action: 'Transfer from Jug2 to Jug1',
-            status: 'solved',
+            status: 'Solved',
           },
         ],
       };

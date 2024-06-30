@@ -34,11 +34,11 @@ describe('WaterJugRiddleService', () => {
       expect(solution).toEqual(expectedResult);
     });
 
-    it('should return correct solution for classic problem with 3 and 5 liters jugs', () => {
+    it('should return correct solution for classic problem with 3 and 5 gallon jugs', () => {
       const solution = waterJugRiddleService.getSolution(3, 5, 4);
 
       expect(solution).toEqual([
-        { step: 1, jug1Volume: 5, jug2Volume: 0, action: 'Fill Jug1' },
+        { step: 1, jug1Volume: 0, jug2Volume: 5, action: 'Fill Jug2' },
         {
           step: 2,
           jug1Volume: 3,
@@ -58,7 +58,7 @@ describe('WaterJugRiddleService', () => {
           jug1Volume: 3,
           jug2Volume: 4,
           action: 'Transfer from Jug2 to Jug1',
-          status: 'solved',
+          status: 'Solved',
         },
       ]);
     });

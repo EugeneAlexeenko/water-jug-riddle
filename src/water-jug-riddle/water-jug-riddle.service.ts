@@ -18,42 +18,97 @@ export class WaterJugRiddleService {
       return `Solution does not exist. Target volume: ${targetVolume} is not a multiple of GCD(${jug1Capacity}, ${jug2Capacity})`;
     }
 
-    return this.getDummySolution();
+    const solutions = [
+      this.pour(jug1Capacity, jug2Capacity, targetVolume, 'Jug1', 'Jug2'),
+      this.pour(jug2Capacity, jug1Capacity, targetVolume, 'Jug2', 'Jug1'),
+    ];
+
+    const bestSolution = solutions.reduce((shortest, current) =>
+      current.length < shortest.length ? current : shortest,
+    );
+
+    console.log(bestSolution);
+    return bestSolution;
+  }
+
+  private pour(
+    fromJugCapacity: number,
+    toJugCap: number,
+    targetVolume: number,
+    fromCapName: string,
+    toCapName: string,
+  ): any {
+    // Initialize current amount of water in source and destination jugs
+    let from = fromJugCapacity;
+    let to = 0;
+
+    // Initialize count of steps required
+    let step = 1; // Needed to fill "from" Jug
+    let steps = [
+      {
+        step: 1,
+        [`${fromCapName.toLowerCase()}Volume`]: from,
+        [`${toCapName.toLowerCase()}Volume`]: to,
+        action: `Fill ${fromCapName}`,
+      },
+    ];
+
+    // Break the loop when either of the two jugs has d litre water
+    while (from != targetVolume && to != targetVolume) {
+      // Find the maximum amount that can be poured
+      let temp = Math.min(from, toJugCap - to);
+
+      // Pour "temp" liters from "from" to "to"
+      to += temp;
+      from -= temp;
+
+      // Increment count of steps
+      step++;
+      steps.push({
+        step,
+        [`${fromCapName.toLowerCase()}Volume`]: from,
+        [`${toCapName.toLowerCase()}Volume`]: to,
+        action: `Transfer from ${fromCapName} to ${toCapName}`,
+      });
+
+      if (from == targetVolume || to == targetVolume) break;
+
+      // If first jug becomes empty, fill it
+      if (from == 0) {
+        from = fromJugCapacity;
+        step++;
+        steps.push({
+          step,
+          [`${fromCapName.toLowerCase()}Volume`]: from,
+          [`${toCapName.toLowerCase()}Volume`]: to,
+          action: `Fill ${fromCapName}`,
+        });
+      }
+
+      // If second jug becomes full, empty it
+      if (to == toJugCap) {
+        to = 0;
+        step++;
+        steps.push({
+          step,
+          [`${fromCapName.toLowerCase()}Volume`]: from,
+          [`${toCapName.toLowerCase()}Volume`]: to,
+          action: `Empty ${toCapName}`,
+        });
+      }
+    }
+
+    steps[steps.length - 1].status = 'Solved';
+
+    return steps;
   }
 
   /**
-   * Utility function to return GCD of 'a' and 'b'.
+   * Utility function to return GCD (greatest common divison) of 'a' and 'b'.
    **/
   private gcd(a: number, b: number): number {
     if (b == 0) return a;
 
     return this.gcd(b, a % b);
-  }
-
-  private getDummySolution(): Step[] {
-    return [
-      { step: 1, jug1Volume: 5, jug2Volume: 0, action: 'Fill Jug1' },
-      {
-        step: 2,
-        jug1Volume: 3,
-        jug2Volume: 2,
-        action: 'Transfer from Jug2 to Jug1',
-      },
-      { step: 3, jug1Volume: 0, jug2Volume: 2, action: 'Empty Jug1' },
-      {
-        step: 4,
-        jug1Volume: 2,
-        jug2Volume: 0,
-        action: 'Transfer from Jug2 to Jug1',
-      },
-      { step: 5, jug1Volume: 2, jug2Volume: 5, action: 'Fill Jug2' },
-      {
-        step: 6,
-        jug1Volume: 3,
-        jug2Volume: 4,
-        action: 'Transfer from Jug2 to Jug1',
-        status: 'solved',
-      },
-    ];
   }
 }
