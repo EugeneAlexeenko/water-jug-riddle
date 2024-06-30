@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Solution, Step } from './types';
+import { Solution } from './types';
 
 @Injectable()
 export class WaterJugRiddleService {
@@ -44,7 +44,7 @@ export class WaterJugRiddleService {
 
     // Initialize count of steps required
     let step = 1; // Needed to fill "from" Jug
-    let steps = [
+    const steps = [
       {
         step: 1,
         [`${fromCapName.toLowerCase()}Volume`]: from,
@@ -56,7 +56,7 @@ export class WaterJugRiddleService {
     // Break the loop when either of the two jugs has d litre water
     while (from != targetVolume && to != targetVolume) {
       // Find the maximum amount that can be poured
-      let temp = Math.min(from, toJugCap - to);
+      const temp = Math.min(from, toJugCap - to);
 
       // Pour "temp" liters from "from" to "to"
       to += temp;
