@@ -27,6 +27,13 @@ describe('WaterJugRiddleService', () => {
       expect(solution).toEqual(expectedResult);
     });
 
+    it('should return an error if solution is not possible', () => {
+      const expectedResult: Solution =
+        'Solution does not exist. Target volume: 2 is not a multiple of GCD(3, 6)';
+      const solution = waterJugRiddleService.getSolution(3, 6, 2);
+      expect(solution).toEqual(expectedResult);
+    });
+
     it('should return correct solution for classic problem with 3 and 5 liters jugs', () => {
       const solution = waterJugRiddleService.getSolution(3, 5, 4);
 
