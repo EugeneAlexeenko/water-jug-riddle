@@ -20,8 +20,10 @@ export class WaterJugRiddleController {
   })
   @Post('solution')
   @HttpCode(HttpStatus.OK)
-  getSolution(@Body() dto: SolutionRequestDto): SolutionResponseDto {
-    const solution = this.waterJugRiddleService.getSolution(
+  async getSolution(
+    @Body() dto: SolutionRequestDto,
+  ): Promise<SolutionResponseDto> {
+    const solution = await this.waterJugRiddleService.getSolution(
       dto.jug1Capacity,
       dto.jug2Capacity,
       dto.targetVolume,

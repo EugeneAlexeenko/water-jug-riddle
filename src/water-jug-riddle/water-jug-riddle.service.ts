@@ -1,13 +1,24 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { Cache } from 'cache-manager';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Solution } from './types';
 
 @Injectable()
 export class WaterJugRiddleService {
-  getSolution(
+  constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {}
+
+  async getSolution(
     jug1Capacity: number,
     jug2Capacity: number,
     targetVolume: number,
-  ): Solution {
+  ): Promise<Solution> {
+    const cacheKey = `solution-${jug1Capacity}-${jug2Capacity}-${targetVolume}`;
+    const cachedSolution = await this.cacheManager.get<Solution>(cacheKey);
+
+    if (cachedSolution) {
+      return cachedSolution;
+    }
+
     const biggerJugCapacity = Math.max(jug1Capacity, jug2Capacity);
 
     if (jug1Capacity < targetVolume && jug2Capacity < targetVolume) {
@@ -27,7 +38,8 @@ export class WaterJugRiddleService {
       current.length < shortest.length ? current : shortest,
     );
 
-    console.log(bestSolution);
+    await this.cacheManager.set(cacheKey, bestSolution, 0);
+
     return bestSolution;
   }
 
